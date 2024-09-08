@@ -1,3 +1,8 @@
 # GrooveGraph | a Music Identity protocol
 
 [TBC]
+dev wallet:
+
+cd09c312e39812b2a9776205d9c5136019b34a5cd02a9443c6313dca72daf123
+
+0x6CaB0E518416699a0dd124D22288C57970Bd226E
