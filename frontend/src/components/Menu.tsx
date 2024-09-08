@@ -1,22 +1,18 @@
 import React from 'react';
-import { FaHome, FaMusic, FaChartBar } from 'react-icons/fa';
+import { Link, useLocation } from 'react-router-dom';
 import { truncateWalletAddress } from '../utils/helpers';
 
-const MenuItem = ({ icon, text }: { icon: React.ReactNode; text: string }) => (
-  <li className="flex items-center space-x-4 py-2 px-4 hover:bg-card-background rounded-lg cursor-pointer">
-    {icon}
-    <span>{text}</span>
-  </li>
-);
 
 interface MenuProps {
   loggedIn: boolean;
   walletAddress: string;
   login: () => void;
-  logout: () => void; // Add this line
+  logout: () => void;
 }
 
-function Menu({ loggedIn, walletAddress, login, logout }: MenuProps) { // Add logout here
+function Menu({ loggedIn, walletAddress, login, logout }: MenuProps) {
+  const location = useLocation();
+
   return (
     <div className="flex flex-col h-full py-8">
       <div className="mb-12">
@@ -24,17 +20,32 @@ function Menu({ loggedIn, walletAddress, login, logout }: MenuProps) { // Add lo
       </div>
       <nav className="flex-grow">
         <ul className="space-y-4">
-          <MenuItem icon={<FaHome className="text-xl" />} text="Explore" />
-          <MenuItem icon={<FaMusic className="text-xl" />} text="My Profile" />
-          <MenuItem icon={<FaChartBar className="text-xl" />} text="Bounties" />
-        </ul>
+        <li>
+          <Link 
+            to="/explore" 
+            className={`flex items-center py-2 px-4 rounded ${location.pathname === '/explore' ? 'bg-primary text-white' : 'hover:bg-gray-200'}`}
+          >
+            <img src="/src/assets/layout-grid.svg" alt="" className="w-5 h-5 mr-2" />
+            <span>Explore</span>
+          </Link>
+        </li>
+        <li>
+          <Link 
+            to="/profile" 
+            className={`flex items-center  py-2 px-4 rounded ${location.pathname === '/profile' ? 'bg-primary text-white' : 'hover:bg-gray-200'}`}
+          >
+            <img src="/src/assets/user-music.svg" alt="My Profile" className="w-5 h-5 mr-2" />
+            My Profile
+          </Link>
+        </li>
+      </ul>
       </nav>
       <div className="mt-auto">
         {loggedIn ? (
           <div className="flex items-center justify-between w-full py-2 px-4 bg-card-background text-primary rounded-lg">
-            <span>{truncateWalletAddress(walletAddress)}</span>
-            <button onClick={logout} className="ml-2 p-1 hover:bg-opacity-80 transition-colors">
-              <img src="/src/assets/log-out.svg" alt="Sign out" className="w-5 h-5" />
+          <span>{truncateWalletAddress(walletAddress)}</span>
+          <button onClick={logout} className="ml-2 p-1 hover:bg-opacity-80 transition-colors">
+            <img src="/src/assets/log-out.svg" alt="Sign out" className="w-5 h-5" />
             </button>
           </div>
         ) : (
